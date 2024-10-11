@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive JavaScript Asynchronous Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        section h2 {
+            color: #333;
+        }
+        p {
+            padding: 10px 0;
+        }
+        .code-block {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid #333;
+            margin: 10px 0;
+            font-family: monospace;
+            position: relative;
+        }
+        .run-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        iframe {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+        }
+        .output {
+            padding: 10px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        #footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Interactive Asynchronous JavaScript Examples</h1>
+    </header>
+
+    <!-- Slide 3: Synchronous vs Asynchronous -->
+    <section>
+        <h2>Slide 3: Synchronous vs Asynchronous</h2>
+
+        <p><strong>Synchronous Example:</strong></p>
+        <div class="code-block">
+            <textarea id="code1" style="width: 100%; height: 100px;">
+document.getElementById("syncOutput").innerHTML = "Bắt đầu";
+document.getElementById("syncOutput").innerHTML += "<br>Kết thúc";
+            </textarea>
+            <button class="run-btn" onclick="runCode('code1', 'syncOutput')">Run</button>
+        </div>
+        <div id="syncOutput" class="output">Output here</div>
+
+        <p><strong>Asynchronous Example:</strong></p>
+        <div class="code-block">
+            <textarea id="code2" style="width: 100%; height: 100px;">
+document.getElementById("asyncOutput").innerHTML = "Bắt đầu";
+setTimeout(() => {
+    document.getElementById("asyncOutput").innerHTML += "<br>Thực thi sau 1 giây";
+}, 1000);
+document.getElementById("asyncOutput").innerHTML += "<br>Kết thúc";
+            </textarea>
+            <button class="run-btn" onclick="runCode('code2', 'asyncOutput')">Run</button>
+        </div>
+        <div id="asyncOutput" class="output">Output here</div>
+    </section>
+
+    <!-- Slide 4: Handling Asynchronous -->
+    <section>
+        <h2>Slide 4: Handling Asynchronous</h2>
+        <p><strong>Callback Example:</strong></p>
+        <div class="code-block">
+            <textarea id="code3" style="width: 100%; height: 100px;">
+function updateText(callback) {
+    setTimeout(() => {
+        document.getElementById("callbackOutput").innerHTML += "<br>Hoàn thành tác vụ";
+        callback();
+    }, 1000);
+}
+
+updateText(() => {
+    document.getElementById("callbackOutput").innerHTML += "<br>Callback được gọi sau khi tác vụ hoàn thành";
+});
+            </textarea>
+            <button class="run-btn" onclick="runCode('code3', 'callbackOutput')">Run</button>
+        </div>
+        <div id="callbackOutput" class="output">Output here</div>
+
+        <p><strong>Promise Example:</strong></p>
+        <div class="code-block">
+            <textarea id="code4" style="width: 100%; height: 100px;">
+let promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve("Hoàn thành tác vụ");
+    }, 1000);
+});
+
+promise.then(result => {
+    document.getElementById("promiseOutput").innerHTML += `<br>${result}`;
+});
+            </textarea>
+            <button class="run-btn" onclick="runCode('code4', 'promiseOutput')">Run</button>
+        </div>
+        <div id="promiseOutput" class="output">Output here</div>
+
+        <p><strong>Async/Await Example:</strong></p>
+        <div class="code-block">
+            <textarea id="code5" style="width: 100%; height: 100px;">
+async function doTask() {
+    let result = await new Promise((resolve) => {
+        setTimeout(() => resolve("Hoàn thành tác vụ"), 1000);
+    });
+    document.getElementById("asyncAwaitOutput").innerHTML += `<br>${result}`;
+}
+
+doTask();
+            </textarea>
+            <button class="run-btn" onclick="runCode('code5', 'asyncAwaitOutput')">Run</button>
+        </div>
+        <div id="asyncAwaitOutput" class="output">Output here</div>
+    </section>
+
+    <!-- Slide 5: Event Loop, Call Stack, Callback Queue -->
+    <section>
+        <h2>Slide 5: Event Loop, Call Stack, Callback Queue</h2>
+        <div class="code-block">
+            <textarea id="code6" style="width: 100%; height: 100px;">
+document.getElementById("eventLoopOutput").innerHTML = "Bắt đầu";
+setTimeout(() => {
+    document.getElementById("eventLoopOutput").innerHTML += "<br>Thực thi sau 2 giây";
+}, 2000);
+setTimeout(() => {
+    document.getElementById("eventLoopOutput").innerHTML += "<br>Thực thi sau 1 giây";
+}, 1000);
+document.getElementById("eventLoopOutput").innerHTML += "<br>Kết thúc";
+            </textarea>
+            <button class="run-btn" onclick="runCode('code6', 'eventLoopOutput')">Run</button>
+        </div>
+        <div id="eventLoopOutput" class="output">Output here</div>
+    </section>
+
+    <footer id="footer">
+        <p>Thank you for viewing the interactive examples!</p>
+    </footer>
+
+    <script>
+        function runCode(codeId, outputId) {
+            var code = document.getElementById(codeId).value;
+            var outputDiv = document.getElementById(outputId);
+            outputDiv.innerHTML = "";  // Clear previous output
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.innerHTML = code;
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>
